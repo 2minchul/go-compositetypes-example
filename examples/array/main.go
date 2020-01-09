@@ -27,8 +27,9 @@ func main() {
 
 	{
 		/*
-			컴파일러에게 배열의 길이를 계산하도록 [...] 를 사용할 수 있다.
-			! 컴파일러가 숫자를 대신 넣어 줄 뿐, 여전히 배열은 고정크기이다.
+			컴파일러에게 배열의 길이를 계산하도록 [...]T 를 사용할 수 있다.
+			- 컴파일러가 숫자를 대신 넣어 줄 뿐, 여전히 배열은 고정크기이다.
+			- []T 는 슬라이스 이니 주의하자
 		*/
 		arr := [...]int{1, 2, 3}
 		fmt.Printf("%#v\n", arr) // [3]int{1, 2, 3}
@@ -69,6 +70,33 @@ func main() {
 		fmt.Printf("&intArr[1]: %d\n", &intArr[1])
 		fmt.Printf("&intArr[2]: %d\n", &intArr[2])
 		fmt.Printf("&intArr[3]: %d\n", &intArr[3])
+	}
+
+	{
+		/*
+			range 키워드로 배열을 순회 할 수 있다
+		*/
+		arr := [...]string{"hi", "hello"}
+
+		// 인덱스와 값 순회
+		for i, v := range arr {
+			fmt.Println(i, v)
+		}
+
+		// 인덱스만 순회
+		for i := range arr {
+			fmt.Println(i)
+		}
+
+		// 값만 순회
+		for _, v := range arr {
+			fmt.Println(v)
+		}
+
+		// v 는 값의 복사본을 저장하는 변수이기 때문에 항상 같은 포인터를 갖는다. (range 는 값이 복사되어 전달된다)
+		for i, v := range arr {
+			fmt.Printf("i=%d, v=%s, &a[%d]:%p, &v:%p\n", i, v, i, &arr[i], &v)
+		}
 	}
 
 }
